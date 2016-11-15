@@ -5,50 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Safewalk</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" href"main.css" />
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyBZrlFM-UWvijdFWL6aBYWaARHvAbd8Yeo",
-        authDomain: "safewalk-4c340.firebaseapp.com",
-        databaseURL: "https://safewalk-4c340.firebaseio.com",
-        storageBucket: "safewalk-4c340.appspot.com",
-        messagingSenderId: "680615541265"
-      };
-      firebase.initializeApp(config);
-    </script>
-    <script>
-          function initMap() {
-        // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          scrollwheel: false,
-          zoom: 8
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap"
-    async defer></script>
-
-    <script type="text/javascript" src="app.js"></script>
-
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="container">
+      <h1>
+      <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg"/>
+        Safewalk
+      </h1>
         <div class="row">
-          <h1>Safewalk</h1>
-          <div class="col-md-4">
-            <div id="map" style="min-height:300px">
+          <div id="mapCol" class="col-md-12">
+            <div id="map" >
               <h1>Hello!</h1>
             </div>
           </div>
         </div>
     </div>
+    
+    <!-- Includes for jQuery, Firebase, Google Maps, and our app are last to improve performance a little-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap"
+    async defer></script>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

@@ -1,0 +1,10 @@
+html, body {
+  height: 100%
+}
+#headerIcon {
+  max-height: 35px;
+}
+#map {
+  height: 85vh;
+  min-height: 100px;
+}
