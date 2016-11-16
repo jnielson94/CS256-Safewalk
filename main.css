@@ -2,6 +2,22 @@ html, body {
   height: 100%
 }
 
+.white-text {
+  color: #ffffff;
+}
+
+.dark-blue {
+  background-color: #3662ba;
+}
+
+.light-blue {
+  background-color: #91c0ff;
+}
+
+.red-border {
+  border-color: #cc0000;
+}
+
 .modal {
   display:none;
   position: fixed;
@@ -39,6 +55,8 @@ html, body {
 
 #headerIcon {
   max-height: 35px;
+  background-color: #ffffff;
+  border-radius: 105%;
 }
 #map {
   height: 85vh;
