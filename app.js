@@ -42,7 +42,7 @@ window.onclick = function(event) {
   }
 }
 
-function addMarker(var myLatLng, var map){ // myLatLng: {lat: 40.2501, lng: -111.649}
+function addMarker(myLatLng, map){ // myLatLng: {lat: 40.2501, lng: -111.649}
 	var marker = new google.maps.Marker({
 		position: myLatLng,
 		map: map,
