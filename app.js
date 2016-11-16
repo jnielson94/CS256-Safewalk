@@ -6,7 +6,13 @@ function initMap() {
 //    scrollwheel: false,
     zoom: 14
   });
+  myMap = map;
+
+  map.addListener('click', function(e) {
+  	addMarker(e.latLng, map);
+  });
 }
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBZrlFM-UWvijdFWL6aBYWaARHvAbd8Yeo",
@@ -34,4 +40,12 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+
+function addMarker(var myLatLng, var map){ // myLatLng: {lat: 40.2501, lng: -111.649}
+	var marker = new google.maps.Marker({
+		position: myLatLng,
+		map: map,
+		title: 'Hello World!'
+	});
 }
