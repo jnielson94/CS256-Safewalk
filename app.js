@@ -49,3 +49,40 @@ function addMarker(myLatLng, map){ // myLatLng: {lat: 40.2501, lng: -111.649}
 		title: 'Hello World!'
 	});
 }
+
+var database = firebase.database();
+var comments = database.ref("comments/");
+
+function addAlert(Location, Comment){ // params given by modal
+  console.log(Location, Comment);
+  
+  chattyref.push({
+    location: Location,
+    comment: Comment
+  })
+}
+
+function resetDB(){ // if we ever want to reset data - maybe put a button in for this during testing?
+  database.ref('comments/').set({ // replace whatever was there
+    location: null,
+    comment: null
+  });
+  console.log("DB IS RESET");
+}
+
+function deleteTweet(key){ // deleting comments - work on this later
+  conole.log("delete");
+  //getelementbyid('key').delete(); --- or however we set that up in the html
+  //then delete out of database 
+}
+
+chattyref.on('child_added',function(data){ // when alert is added to DB
+  var Alert = data.val();
+  console.log(data.val().location); // checking that it saved to database correctly
+  console.log(data.val().comment);
+
+  //note: get the timestamp also
+
+  $("#thecomments").append("<p class = \"comment\"> User: " + data.val().location +  "<br></br>Comment: " + data.val().message + "<button class = \"button\" onclick=\"delete\">X</button></p>")
+  //(postElement,data.key, data.val().text)}
+});
