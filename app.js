@@ -87,7 +87,7 @@ function deleteTweet(key){ // deleting comments - work on this later
   //then delete out of database 
 }
 
-chattyref.on('child_added',function(data){ // when alert is added to DB
+comments.on('child_added',function(data){ // when alert is added to DB
   var Alert = data.val();
   console.log(data.val().location); // checking that it saved to database correctly
   console.log(data.val().comment);
