@@ -16,3 +16,22 @@ var config = {
   messagingSenderId: "680615541265"
 };
 firebase.initializeApp(config);
+
+var modal = document.getElementById('addAlertModal');
+var btn = document.getElementById('myBtn');
+var close = document.getElementsByClassName('close')[0];
+
+//Opens modal when user clicks on the button (for now)
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+//Closes modal when user clicks on close
+close.onclick = function() {
+  modal.style.display = "none";
+}
+//Closes modal when user clicks elsewhere
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
