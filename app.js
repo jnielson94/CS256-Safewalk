@@ -1,4 +1,4 @@
-
+var myMap = "";
 function initMap() {
 // Create a map object and specify the DOM element for display.
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -10,8 +10,7 @@ function initMap() {
 
   map.addListener('click', function(e) {
     document.getElementById('addAlertModal').style.display = "block";
-    document.getElementById('locationText').value = e.latLng;
-  	addMarker(e.latLng, map);
+    document.getElementById('locationText').value = e.latLng.toJSON();
   });
 }
 
@@ -51,24 +50,41 @@ submit.onclick = function() {
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 
-function addMarker(myLatLng, map){ // myLatLng: {lat: 40.2501, lng: -111.649}
+function addMarker(myLatLng, map, comment){ // myLatLng: {lat: 40.2501, lng: -111.649}
 	var marker = new google.maps.Marker({
 		position: myLatLng,
     label: labels[labelIndex++ % labels.length],
 		map: map,
 		title: 'Hello World!'
 	});
+  var commentText = comment || ""; //Sets default text to the comment, or if no comment is passed in the empty string
+  console.log(commentText);
+  if(commentText !== "") { //Check to make sure you don't have an empty comment...
+    var contentString = '<div id="markerInfo">' +
+      '<div id="siteNotice">' + '</div>' +
+      '<h1 id="firstHeading" class="firstHeading">Alert</h1>' +
+      '<div id="bodyContent">' + 
+      commentText +
+      '</div></div>';
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      maxWidth: 200
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
 }
 
 var database = firebase.database();
 var comments = database.ref("comments/");
 
 function addAlert(Location, Comment){ // params given by modal
-  console.log(Location, Comment);
+  console.log(JSON.stringify(Location), Comment);
   
   comments.push({
 
-    location: Location,
+    location: JSON.stringify(Location),
     comment: Comment
   })
 }
@@ -94,6 +110,9 @@ comments.on('child_added',function(data){ // when alert is added to DB
 
   //note: get the timestamp also
 
+  if(myMap !== "") {
+    addMarker(data.val().location, myMap, data.val().message);
+  }
   $("#thecomments").append("<p class = \"comment\"> User: " + data.val().location +  "<br></br>Comment: " + data.val().message + "<button class = \"button\" onclick=\"delete\">X</button></p>")
   //(postElement,data.key, data.val().text)}
 });
