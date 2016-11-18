@@ -23,8 +23,8 @@
       </h1>
       <div id="routeinputdiv">
         <form class="form-horizontal">
-	  <input type="text" id="originbox" value="Starting Point"></input>
-	  <input type="text" id="destinationbox" value="Destination"></input>
+	  <input type="text" id="originbox" placeholder="Starting Point"></input>
+	  <input type="text" id="destinationbox" placeholder="Destination"></input>
 	  <button type="button" class="btn btn-primary" id="calcroutebtn">Calculate</button>
 	</form>
       </div>
@@ -39,14 +39,6 @@
                 <span id="closeModal" class="close">x</span>
                 <h3>Add Alert</h3>
               </div>
-              <label>Location: </label>
-              <input type="text" id="locationText" readonly></input>
-              <br>
-              <label>Comment: </label>
-              <textarea id="commentText"></textarea>
-              <br>
-              <button id="submitAlert">Submit</button>
-            </div>
             <label>The location is prefilled based on where you clicked on the map. If this location is not correct, please close the modal.</label>
             <input type="text" id="locationText" hidden></input>
             <br>
