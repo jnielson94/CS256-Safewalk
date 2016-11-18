@@ -83,7 +83,7 @@ submit.onclick = function () {
   document.getElementById('commentText').value = ''
   modal.style.display = 'none'
 }
-var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 var labelIndex = 0
 
 function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -111.649}
@@ -94,7 +94,7 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
   var marker = new google.maps.Marker({
     position: latLng,
     icon: 'exclamation.png',
-    label: labels[labelIndex++ % labels.length],
+    label: labelIndex++,
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
