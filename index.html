@@ -16,18 +16,14 @@
   white-text for white text...
   red-border for the red border... 
   -->
+    <input type="text" class="controls" id="originbox" placeholder="Starting Point"></input>
+    <input type="text" class="controls" id="destinationbox" placeholder="Destination"></input>
+
     <div class="container">
       <h1 class="dark-blue white-text">
       <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg"/>
         Safewalk
       </h1>
-      <div id="routeinputdiv">
-        <form class="form-horizontal">
-	  <input type="text" id="originbox" placeholder="Starting Point"></input>
-	  <input type="text" id="destinationbox" placeholder="Destination"></input>
-	  <button type="button" class="btn btn-primary" id="calcroutebtn">Calculate</button>
-	</form>
-      </div>
       <div class="row">
         <div id="mapCol" class="col-md-12">
           <div id="map" >
@@ -60,7 +56,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
     <script type="text/javascript" src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap" async
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap&libraries=places" async
       defer></script>
 </body>
 

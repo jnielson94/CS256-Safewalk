@@ -15,6 +15,55 @@ function initMap() {
 
   directionsDisplay.setMap(map);
 
+  var origin_input = document.getElementById('originbox');
+  var destination_input = document.getElementById('destinationbox');
+
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+
+  // adding autocomplete to the starting point and destination boxes
+  var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+  origin_autocomplete.bindTo('bounds', map);
+  var destination_autocomplete = new google.maps.places.Autocomplete(destination_input);
+  destination_autocomplete.bindTo('bounds', map);
+
+  function expandViewportToFitPlace(map, place) {
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } 
+    else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+  }
+
+  origin_autocomplete.addListener('place_changed', function() {
+    var place = origin_autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+      expandViewportToFitPlace(map, place);
+
+      // If the place has a geometry, store its place ID and route if we have
+      // the other place ID
+      origin_place_id = place.place_id;
+      calcRoute();
+  });
+
+  destination_autocomplete.addListener('place_changed', function() {
+    var place = destination_autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+    expandViewportToFitPlace(map, place);
+
+    // If the place has a geometry, store its place ID and route if we have
+    // the other place ID
+    destination_place_id = place.place_id;
+    calcRoute();
+  });
 
   // if the client's geolocation is available, center the map on that location
   if (navigator.geolocation) {
@@ -30,23 +79,22 @@ function initMap() {
   })
 }
 
-$("#calcroutebtn").click(function(){
-  calcRoute();
-});
-
 function calcRoute() {
   var start = $("#originbox").val();
   var end = $("#destinationbox").val();
-  var request = {
-    origin: start,
-    destination: end,
-    travelMode: 'WALKING'
-  };
-  directionsService.route(request, function(result, status) {
-    if (status == 'OK') {
-      directionsDisplay.setDirections(result);
-    }
-  });
+
+  if(start != '' && end != '') {
+    var request = {
+      origin: start,
+      destination: end,
+      travelMode: 'WALKING'
+    };
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(result);
+      }
+    });
+  }
 }
 
 // Initialize Firebase
