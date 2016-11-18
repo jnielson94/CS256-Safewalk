@@ -48,6 +48,7 @@ var labelIndex = 0;
 function addMarker(myLatLng, map){ // myLatLng: {lat: 40.2501, lng: -111.649}
 	var marker = new google.maps.Marker({
 		position: myLatLng,
+    icon: 'exclamation.png',
     label: labels[labelIndex++ % labels.length],
 		map: map,
 		title: 'Hello World!'
