@@ -1,17 +1,51 @@
-var myMap = ''
-function initMap () {
-  // Create a map object and specify the DOM element for display.
-  var map = new google.maps.Map(document.getElementById('map'), {
+var drectionsDisplay;
+var directionsService;
+var map = '';
+
+function initMap() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsService = new google.maps.DirectionsService();
+// Create a map object and specify the DOM element for display.
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.2501, lng: -111.649},
     //    scrollwheel: false,
     zoom: 14
   })
-  myMap = map
+
+  directionsDisplay.setMap(map);
+
+
+  // if the client's geolocation is available, center the map on that location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map.setCenter(initialLocation);
+    });
+  }
 
   map.addListener('click', function (e) {
     document.getElementById('addAlertModal').style.display = 'block'
     document.getElementById('locationText').value = JSON.stringify(e.latLng.toJSON())
   })
+}
+
+$("#calcroutebtn").click(function(){
+  calcRoute();
+});
+
+function calcRoute() {
+  var start = $("#originbox").val();
+  var end = $("#destinationbox").val();
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'WALKING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(result);
+    }
+  });
 }
 
 // Initialize Firebase
@@ -58,6 +92,7 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
   console.log('Parsed! ', latLng)
   var marker = new google.maps.Marker({
     position: latLng,
+    icon: 'exclamation.png',
     label: labels[labelIndex++ % labels.length],
     map: map
   })
@@ -113,8 +148,8 @@ comments.on('child_added', function (data) { // when alert is added to DB
 
   // note: get the timestamp also
 
-  if (myMap !== '') {
-    addMarker(data.val().location, myMap, data.val().comment)
+  if (map !== '') {
+    addMarker(data.val().location, map, data.val().comment)
   }
   $('#thecomments').append('<p class = "comment"> User: ' + data.val().location + '<br></br>Comment: ' + data.val().comment + '<button class = "button" onclick="delete">X</button></p>')
 // (postElement,data.key, data.val().text)}

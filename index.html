@@ -16,20 +16,36 @@
   white-text for white text...
   red-border for the red border... 
   -->
-  <div class="container">
-    <h1 class="dark-blue white-text">
-      <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg" />      Safewalk
-    </h1>
-    <div class="row">
-      <div id="mapCol" class="col-md-12">
-        <div id="map">
-          <h1>Hello!</h1>
-        </div>
-        <div id="addAlertModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header light-blue">
-              <span id="closeModal" class="close">x</span>
-              <h3>Add Alert</h3>
+    <div class="container">
+      <h1 class="dark-blue white-text">
+      <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg"/>
+        Safewalk
+      </h1>
+      <div id="routeinputdiv">
+        <form class="form-horizontal">
+	  <input type="text" id="originbox" value="Starting Point"></input>
+	  <input type="text" id="destinationbox" value="Destination"></input>
+	  <button type="button" class="btn btn-primary" id="calcroutebtn">Calculate</button>
+	</form>
+      </div>
+      <div class="row">
+        <div id="mapCol" class="col-md-12">
+          <div id="map" >
+            <h1>Hello!</h1>
+          </div>
+          <div id="addAlertModal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header light-blue">
+                <span id="closeModal" class="close">x</span>
+                <h3>Add Alert</h3>
+              </div>
+              <label>Location: </label>
+              <input type="text" id="locationText" readonly></input>
+              <br>
+              <label>Comment: </label>
+              <textarea id="commentText"></textarea>
+              <br>
+              <button id="submitAlert">Submit</button>
             </div>
             <label>The location is prefilled based on where you clicked on the map. If this location is not correct, please close the modal.</label>
             <input type="text" id="locationText" hidden></input>
