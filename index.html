@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Safewalk</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="main.css" />
-  </head>
-  <body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Safewalk</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
   <!-- Color Classes:
   dark-blue for the dark blue background...
   light-blue for the light blue background...
@@ -19,6 +21,13 @@
       <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg"/>
         Safewalk
       </h1>
+      <div id="routeinputdiv">
+        <form class="form-horizontal">
+	  <input type="text" id="originbox" placeholder="Starting Point"></input>
+	  <input type="text" id="destinationbox" placeholder="Destination"></input>
+	  <button type="button" class="btn btn-primary" id="calcroutebtn">Calculate</button>
+	</form>
+      </div>
       <div class="row">
         <div id="mapCol" class="col-md-12">
           <div id="map" >
@@ -30,14 +39,14 @@
                 <span id="closeModal" class="close">x</span>
                 <h3>Add Alert</h3>
               </div>
-              <label>Location: </label>
-              <input type="text" id="locationText" readonly></input>
-              <br>
-              <label>Comment: </label>
-              <textarea id="commentText"></textarea>
-              <br>
-              <button id="submitAlert">Submit</button>
-            </div>
+            <label>The location is prefilled based on where you clicked on the map. If this location is not correct, please close the modal.</label>
+            <input type="text" id="locationText" hidden></input>
+            <br>
+            <label>Comment: </label>
+            <textarea id="commentText"></textarea>
+            <br>
+            <button id="submitAlert">Submit</button>
+          </div>
         </div>
       </div>
       <h2> Comments 
@@ -47,12 +56,13 @@
             
       </div>
     </div>
-    
+
     <!-- Includes for jQuery, Firebase, Google Maps, and our app are last to improve performance a little-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
     <script type="text/javascript" src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap"
-    async defer></script>
-  </body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap" async
+      defer></script>
+</body>
+
 </html>
