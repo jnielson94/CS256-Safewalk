@@ -121,7 +121,7 @@ var database = firebase.database()
 var alerts = database.ref('alerts/')
 
 function addAlert (Location, Alerts) { // params given by modal
-  comments.push({
+  alerts.push({
     location: Location,
     alert: Alerts
   })
@@ -141,7 +141,7 @@ function deleteAlert (key) { // deleting comments - work on this later
   alerts.child(key).remove();
 }
 
-comments.on('child_added', function (data) { // when alert is added to DB
+alerts.on('child_added', function (data) { // when alert is added to DB
   var Alert = data.val()
   console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
