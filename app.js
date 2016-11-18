@@ -86,8 +86,7 @@ submit.onclick = function () {
 
 var labelIndex = 0
 
-function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -111.649}
-  var myLabel = "";
+function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2501, lng: -111.649}
   console.log('Adding a marker: ')
   console.log(myLatLng, comment)
   var latLng = JSON.parse(myLatLng)
@@ -95,7 +94,7 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
   var marker = new google.maps.Marker({
     position: latLng,
     icon: 'exclamation.png',
-    label: myLabel + labelIndex++,
+    label: labelText,
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
@@ -149,10 +148,12 @@ comments.on('child_added', function (data) { // when alert is added to DB
   console.log(data.val().alert)
 
   // note: get the timestamp also
+  var labelText;
   if (map !== '') {
-    addMarker(data.val().location, map, data.val().comment)
+    labelText = "" + labelIndex++;
+    addMarker(data.val().location, map, data.val().comment,labelText)
   }
-  $('#thecomments').append('<p class = "alerts"> ' + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
+  $('#thecomments').append('<p class = "alerts">'+labelText+ ". " + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
 // (postElement,data.key, data.val().text)}
 //' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });
