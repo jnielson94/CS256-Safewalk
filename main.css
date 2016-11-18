@@ -42,7 +42,7 @@ html, body {
 }
 
 .close {
-  color: #aaa;
+  color: #222;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -55,6 +55,21 @@ html, body {
   cursor: pointer;
 }
 
+.addAlertLabel {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+.modal-header {
+  height: 50px;
+}
+
+#commentText {
+  width: 60;
+}
+
 #headerIcon {
   max-height: 35px;
   background-color: #ffffff;
@@ -63,6 +78,10 @@ html, body {
 #map {
   height: 85vh;
   min-height: 100px;
+}
+
+#submitAlert {
+    color: white;
 }
 
 #thecomments{
