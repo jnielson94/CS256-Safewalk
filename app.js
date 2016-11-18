@@ -151,6 +151,7 @@ comments.on('child_added', function (data) { // when alert is added to DB
   if (map !== '') {
     addMarker(data.val().location, map, data.val().comment)
   }
-  $('#thecomments').append('<p class = "alerts"> Location: ' + data.val().location + '<p></p>Alert: ' + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
+  $('#thecomments').append('<p class = "alerts"> ' + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
 // (postElement,data.key, data.val().text)}
+//' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });
