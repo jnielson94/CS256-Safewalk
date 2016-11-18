@@ -93,6 +93,6 @@ comments.on('child_added',function(data){ // when alert is added to DB
 
   //note: get the timestamp also
 
-  $("#thecomments").append("<p class = \"comment\"> User: " + data.val().location +  "<br></br>Comment: " + data.val().message + "<button class = \"button\" onclick=\"delete\">X</button></p>")
+  $("#thecomments").append("<p class = \"comment\"> User: " + data.val().location +  "<p></p>Comment: " + data.val().message + "<button class = \"button\" onclick=\"delete\">X</button></p>")
   //(postElement,data.key, data.val().text)}
 });
