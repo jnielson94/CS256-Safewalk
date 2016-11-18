@@ -67,7 +67,8 @@ html, body {
 }
 
 #commentText {
-  width: 60;
+  width: 75%;
+  margin-top:20px;
 }
 
 #headerIcon {
@@ -82,6 +83,13 @@ html, body {
 
 #submitAlert {
     color: white;
+    margin-top:11px;
+}
+
+#commentLabel{
+  margin-top:20px;
+  float:left;
+  margin-right:8px;
 }
 
 #thecomments{
