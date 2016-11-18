@@ -87,6 +87,7 @@ submit.onclick = function () {
 var labelIndex = 0
 
 function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -111.649}
+  var myLabel = "";
   console.log('Adding a marker: ')
   console.log(myLatLng, comment)
   var latLng = JSON.parse(myLatLng)
@@ -94,7 +95,7 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
   var marker = new google.maps.Marker({
     position: latLng,
     icon: 'exclamation.png',
-    label: labelIndex++,
+    label: myLabel + labelIndex++,
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
