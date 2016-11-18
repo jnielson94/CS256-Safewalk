@@ -132,6 +132,7 @@ submit.onclick = function () {
   modal.style.display = 'none'
 }
 
+var markers = [];
 var labelIndex = 0
 
 function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2501, lng: -111.649}
@@ -162,14 +163,15 @@ function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2
       infowindow.close();
     }, 3000)
   })
-  
+  markers.push(marker);
+  return marker; 
 }
 
 var database = firebase.database()
-var comments = database.ref('alerts/')
+var alerts = database.ref('alerts/')
 
 function addAlert (Location, Alerts) { // params given by modal
-  comments.push({
+  alerts.push({
     location: Location,
     alert: Alerts
   })
@@ -183,13 +185,16 @@ function resetDB () { // if we ever want to reset data - maybe put a button in f
   console.log('DB IS RESET')
 }
 
-function deleteAlert (key) { // deleting comments - work on this later
-  conole.log('delete')
-// getelementbyid('key').delete(); --- or however we set that up in the html
-// then delete out of database 
+function deleteAlert (key, markerLabel) { // deleting comments - work on this later
+  document.getElementById(key).remove();// --- or however we set that up in the html
+  alerts.child(key).remove();
+
+  var theMarker = {}; //Find marker in array using label to determine match
+  theMarker.visible=false;
+  theMarker.clickable=false;
 }
 
-comments.on('child_added', function (data) { // when alert is added to DB
+alerts.on('child_added', function (data) { // when alert is added to DB
   var Alert = data.val()
   console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
@@ -197,11 +202,17 @@ comments.on('child_added', function (data) { // when alert is added to DB
 
   // note: get the timestamp also
   var labelText;
+  var theMarker 
   if (map !== '') {
     labelText = "" + labelIndex++;
-    addMarker(data.val().location, map, data.val().comment,labelText)
+    theMarker = addMarker(data.val().location, map, data.val().comment,labelText);
+    console.log(theMarker);
   }
-  $('#thecomments').append('<p class = "alerts">'+labelText+ ". " + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
+
+  $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
+    '\" >'+labelText+ ". " + data.val().alert +
+    '<button class = "button" onclick="deleteAlert(\''+data.key+
+    '\',\'' + theMarker.label + '\')">X</button></p>')
 // (postElement,data.key, data.val().text)}
 //' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });

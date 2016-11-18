@@ -31,17 +31,16 @@
           </div>
           <div id="addAlertModal" class="modal">
             <div class="modal-content">
-              <div class="modal-header light-blue">
+              <div class="modal-header dark-blue">
                 <span id="closeModal" class="close">x</span>
-                <h3>Add Alert</h3>
+                <h3 class = "addAlertLabel">Add Alert</h3>
               </div>
-            <label>The location is prefilled based on where you clicked on the map. If this location is not correct, please close the modal.</label>
             <input type="text" id="locationText" hidden></input>
-            <br>
-            <label>Comment: </label>
-            <textarea id="commentText"></textarea>
-            <br>
-            <button id="submitAlert">Submit</button>
+            <div id="commentWrapper">
+              <div id = "commentLabel">Comment: </label>
+              <textarea id="commentText"></textarea>
+            </div>
+            <button id="submitAlert" class="btn center-block dark-blue">Submit</button>
           </div>
         </div>
       </div>
