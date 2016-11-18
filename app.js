@@ -1,17 +1,52 @@
+var drectionsDisplay;
+var directionsService;
+var map;
 
 function initMap() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsService = new google.maps.DirectionsService();
 // Create a map object and specify the DOM element for display.
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.2501, lng: -111.649},
 //    scrollwheel: false,
     zoom: 14
   });
-  myMap = map;
+
+  directionsDisplay.setMap(map);
+
+  myMap = map; // what is myMap?
+
+  // if the client's geolocation is available, center the map on that location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map.setCenter(initialLocation);
+    });
+  }
 
   map.addListener('click', function(e) {
     document.getElementById('addAlertModal').style.display = "block";
     document.getElementById('locationText').value = e.latLng;
   	addMarker(e.latLng, map);
+  });
+}
+
+$("#calcroutebtn").click(function(){
+  calcRoute();
+});
+
+function calcRoute() {
+  var start = $("#originbox").val();
+  var end = $("#destinationbox").val();
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'WALKING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(result);
+    }
   });
 }
 
