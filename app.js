@@ -118,7 +118,7 @@ function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2
 }
 
 var database = firebase.database()
-var comments = database.ref('alerts/')
+var alerts = database.ref('alerts/')
 
 function addAlert (Location, Alerts) { // params given by modal
   comments.push({
@@ -137,8 +137,8 @@ function resetDB () { // if we ever want to reset data - maybe put a button in f
 
 function deleteAlert (key) { // deleting comments - work on this later
   conole.log('delete')
-// getelementbyid('key').delete(); --- or however we set that up in the html
-// then delete out of database 
+  getelementbyid(key).delete();// --- or however we set that up in the html
+  alerts.child(key).remove();
 }
 
 comments.on('child_added', function (data) { // when alert is added to DB
@@ -151,9 +151,10 @@ comments.on('child_added', function (data) { // when alert is added to DB
   var labelText;
   if (map !== '') {
     labelText = "" + labelIndex++;
-    addMarker(data.val().location, map, data.val().comment,labelText)
+    addMarker(data.val().location, map, data.val().comment,labelText);
   }
-  $('#thecomments').append('<p class = "alerts">'+labelText+ ". " + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
+  $('#thecomments').append('<p class = "alerts" id =\"'+ data.getKey() +'\" >'+labelText+ ". " + data.val().alert +
+    '<button class = "button" onclick="deleteAlert('+data.getKey()+')">X</button></p>')
 // (postElement,data.key, data.val().text)}
 //' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });
