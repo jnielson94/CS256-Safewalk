@@ -86,8 +86,7 @@ submit.onclick = function () {
 
 var labelIndex = 0
 
-function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -111.649}
-  var myLabel = "";
+function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2501, lng: -111.649}
   console.log('Adding a marker: ')
   console.log(myLatLng, comment)
   var latLng = JSON.parse(myLatLng)
@@ -95,7 +94,7 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
   var marker = new google.maps.Marker({
     position: latLng,
     icon: 'exclamation.png',
-    label: myLabel + labelIndex++,
+    label: labelText,
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
@@ -119,24 +118,24 @@ function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -
 }
 
 var database = firebase.database()
-var comments = database.ref('comments/')
+var comments = database.ref('alerts/')
 
-function addAlert (Location, Comment) { // params given by modal
+function addAlert (Location, Alerts) { // params given by modal
   comments.push({
     location: Location,
-    comment: Comment
+    alert: Alerts
   })
 }
 
 function resetDB () { // if we ever want to reset data - maybe put a button in for this during testing?
-  database.ref('comments/').set({ // replace whatever was there
+  database.ref('alerts/').set({ // replace whatever was there
     location: null,
-    comment: null
+    alert: null
   })
   console.log('DB IS RESET')
 }
 
-function deleteTweet (key) { // deleting comments - work on this later
+function deleteAlert (key) { // deleting comments - work on this later
   conole.log('delete')
 // getelementbyid('key').delete(); --- or however we set that up in the html
 // then delete out of database 
@@ -146,13 +145,15 @@ comments.on('child_added', function (data) { // when alert is added to DB
   var Alert = data.val()
   console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
-  console.log(data.val().comment)
+  console.log(data.val().alert)
 
   // note: get the timestamp also
+  var labelText;
   if (map !== '') {
-    addMarker(data.val().location, map, data.val().comment)
+    labelText = "" + labelIndex++;
+    addMarker(data.val().location, map, data.val().comment,labelText)
   }
-  $('#thecomments').append('<p class = "comment"> User: ' + data.val().location + '<p></p>Comment: ' + data.val().comment + '<button class = "button" onclick="delete">X</button></p>')
+  $('#thecomments').append('<p class = "alerts">'+labelText+ ". " + data.val().alert + '<button class = "button" onclick="delete">X</button></p>')
 // (postElement,data.key, data.val().text)}
+//' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });
-
