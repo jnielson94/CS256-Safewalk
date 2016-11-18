@@ -10,7 +10,7 @@ function initMap () {
 
   map.addListener('click', function (e) {
     document.getElementById('addAlertModal').style.display = 'block'
-    document.getElementById('locationText').value = e.latLng.toJSON()
+    document.getElementById('locationText').value = JSON.stringify(e.latLng.toJSON())
   })
 }
 
@@ -42,6 +42,7 @@ window.onclick = function (event) {
 submit.onclick = function () {
   var location = document.getElementById('locationText').value
   var comment = document.getElementById('commentText').value
+  console.log(comment)
   addAlert(location, comment)
   document.getElementById('locationText').value = ''
   document.getElementById('commentText').value = ''
@@ -51,38 +52,41 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var labelIndex = 0
 
 function addMarker (myLatLng, map, comment) { // myLatLng: {lat: 40.2501, lng: -111.649}
+  console.log('Adding a marker: ')
+  console.log(myLatLng, comment)
+  var latLng = JSON.parse(myLatLng)
+  console.log('Parsed! ', latLng)
   var marker = new google.maps.Marker({
-    position: myLatLng,
+    position: latLng,
     label: labels[labelIndex++ % labels.length],
-    map: map,
+    map: map
   })
-  var commentText = comment || ''; // Sets default text to the comment, or if no comment is passed in the empty string
-  console.log(commentText)
-  if (commentText !== '') { // Check to make sure you don't have an empty comment...
-    var contentString = '<div id="markerInfo">' +
-      '<div id="siteNotice">' + '</div>' +
-      '<h1 id="firstHeading" class="firstHeading">Alert</h1>' +
-      '<div id="bodyContent">' +
-      commentText +
-      '</div></div>'
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 200
-    })
-    marker.addListener('click', function () {
-      infowindow.open(map, marker)
-    })
-  }
+  var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
+  var contentString = '<div id="markerInfo">' +
+    '<div id="siteNotice">' + '</div>' +
+    '<h1 id="firstHeading" class="firstHeading">Alert</h1>' +
+    '<div id="bodyContent">' +
+    commentText +
+    '</div></div>'
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 200
+  })
+  marker.addListener('click', function () {
+    infowindow.open(map, marker)
+    setTimeout(function() {
+      infowindow.close();
+    }, 3000)
+  })
+  
 }
 
 var database = firebase.database()
 var comments = database.ref('comments/')
 
 function addAlert (Location, Comment) { // params given by modal
-  console.log(JSON.stringify(Location), Comment)
-
   comments.push({
-    location: JSON.stringify(Location),
+    location: Location,
     comment: Comment
   })
 }
@@ -103,14 +107,15 @@ function deleteTweet (key) { // deleting comments - work on this later
 
 comments.on('child_added', function (data) { // when alert is added to DB
   var Alert = data.val()
+  console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
   console.log(data.val().comment)
 
   // note: get the timestamp also
 
   if (myMap !== '') {
-    addMarker(data.val().location, myMap, data.val().message)
+    addMarker(data.val().location, myMap, data.val().comment)
   }
-  $('#thecomments').append('<p class = "comment"> User: ' + data.val().location + '<br></br>Comment: ' + data.val().message + '<button class = "button" onclick="delete">X</button></p>')
+  $('#thecomments').append('<p class = "comment"> User: ' + data.val().location + '<br></br>Comment: ' + data.val().comment + '<button class = "button" onclick="delete">X</button></p>')
 // (postElement,data.key, data.val().text)}
 })
