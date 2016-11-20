@@ -1,5 +1,4 @@
 html, body {
-  height: 100%
   margin: 0px;
   padding: 0px;
 }
@@ -7,6 +6,10 @@ html, body {
 .container-fluid {
   margin: 0px;
   padding: 0px;
+}
+
+#screen-wrapper {
+  height: 100vh;
 }
 
 .white-text {
@@ -26,10 +29,6 @@ html, body {
 
 .red-border {
   border-color: #cc0000;
-}
-
-.row {
-  /*margin: 0px -15px 0px -15px;*/
 }
 
 .controls {
@@ -116,9 +115,13 @@ html, body {
   border-radius: 105%;
 }
 #map {
-  height: 85vh;
-  min-height: 100px;
+  /*height: 85vh;*/
+  min-height: 75vh;
+  max-height: 85vh;
+  /*height: 100%;*/
+  /*min-height: 100px;*/
   /*position: relative;*/
+  margin: 0px;
 }
 #originDiv {
 	/*position: absolute;*/
@@ -139,6 +142,10 @@ html, body {
 #submitAlert {
     color: white;
     margin-top:11px;
+}
+
+#alerts-div {
+  /*height: 15vh;*/
 }
 
 #commentLabel{
