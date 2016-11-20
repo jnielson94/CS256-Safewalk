@@ -146,10 +146,17 @@ function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2
   console.log(myLatLng, comment)
   var latLng = JSON.parse(myLatLng)
   console.log('Parsed! ', latLng)
+  // var marker = new google.maps.Marker({
+  //   position: latLng,
+  //   icon: 'alert.png',
+  //   label: labelText,
+  //   labelOrigin: new google.maps.Point(10, -10),
+  //   map: map
+  // })
   var marker = new google.maps.Marker({
     position: latLng,
-    icon: 'exclamation.png',
-    label: labelText,
+    icon: {url: 'alert.png', labelOrigin: new google.maps.Point(10, 10)},
+    label: {text: labelText, color: 'white', fontWeight: '400'},
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
