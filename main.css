@@ -1,5 +1,12 @@
 html, body {
   height: 100%
+  margin: 0px;
+  padding: 0px;
+}
+
+.container-fluid {
+  margin: 0px;
+  padding: 0px;
 }
 
 .white-text {
@@ -8,6 +15,8 @@ html, body {
 
 .dark-blue {
   background-color: #3662ba;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .light-blue {
@@ -17,6 +26,36 @@ html, body {
 
 .red-border {
   border-color: #cc0000;
+}
+
+.row {
+  /*margin: 0px -15px 0px -15px;*/
+}
+
+.controls {
+  color: white;
+  background-color: rgba(168, 168, 168, 0.7);
+  width: 100%;
+  height: 30px;
+  border-radius: 15px;
+  border: 0px;
+  margin-top: 5px;
+}
+::-webkit-input-placeholder { /* Chrome */
+  color: white;
+    opacity: 1;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+    opacity: 1;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: white;
+  opacity: 1;
 }
 
 .modal {
@@ -79,13 +118,22 @@ html, body {
 #map {
   height: 85vh;
   min-height: 100px;
-  position: relative;
+  /*position: relative;*/
 }
-#mapOverlay {
-	position: absolute;
-	top: 50px;
-	left: 50px;
-	z-index: 99;
+#originDiv {
+	/*position: absolute;*/
+	/*top: 50px;*/
+	/*left: 50px;*/
+	z-index: 98;
+}
+#destinationDiv {
+  /*position: absolute;*/
+  /*top: 200px;*/
+  /*left: 100px;*/
+  z-index: 99;
+}
+#mapControls {
+  width: 100%;
 }
 
 #submitAlert {

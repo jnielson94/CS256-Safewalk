@@ -10,7 +10,12 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.2501, lng: -111.649},
     //    scrollwheel: false,
-    zoom: 14
+    zoom: 14,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+    }
   })
 
   directionsDisplay.setMap(map);
@@ -18,8 +23,9 @@ function initMap() {
   var origin_input = document.getElementById('originbox');
   var destination_input = document.getElementById('destinationbox');
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+  // map.controls[google.maps.ControlPosition.TOP_CENTER].push(origin_input);
+  // map.controls[google.maps.ControlPosition.TOP_CENTER].push(destination_input);
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(mapControls);
 
   // adding autocomplete to the starting point and destination boxes
   var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
