@@ -186,14 +186,14 @@ var alerts = database.ref('alerts/')
 function addAlert (Location, Alerts) { // params given by modal
   alerts.push({
     location: Location,
-    alert: Alerts
+    alertText: Alerts
   })
 }
 
 function resetDB () { // if we ever want to reset data - maybe put a button in for this during testing?
   database.ref('alerts/').set({ // replace whatever was there
     location: null,
-    alert: null
+    alertText: null
   })
   console.log('DB IS RESET')
 }
@@ -211,19 +211,19 @@ alerts.on('child_added', function (data) { // when alert is added to DB
   var Alert = data.val()
   console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
-  console.log(data.val().alert)
+  console.log(data.val().alertText)
 
   // note: get the timestamp also
   var labelText;
   var theMarker 
   if (map !== '') {
     labelText = "" + labelIndex++;
-    theMarker = addMarker(data.val().location, map, data.val().comment,labelText);
+    theMarker = addMarker(data.val().location, map, data.val().alertText,labelText);
     console.log(theMarker);
   }
 
   $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
-    '\" >'+labelText+ ". " + data.val().alert +
+    '\" >'+labelText+ ". " + data.val().alertText +
     '<button class = "button" onclick="deleteAlert(\''+data.key+
     '\',\'' + theMarker.label + '\')">X</button></p>')
 // (postElement,data.key, data.val().text)}
