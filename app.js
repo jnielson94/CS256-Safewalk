@@ -224,7 +224,7 @@ alerts.on('child_added', function (data) { // when alert is added to DB
 
   $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
     '\" >'+labelText+ ". " + data.val().alertText +
-    '<button class = "button" onclick="deleteAlert(\''+data.key+
+    '  <button class="button btn btn-danger" onclick="deleteAlert(\''+data.key+
     '\',\'' + theMarker.label + '\')">X</button></p>')
 // (postElement,data.key, data.val().text)}
 //' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
