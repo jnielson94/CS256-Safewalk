@@ -16,10 +16,13 @@
   white-text for white text...
   red-border for the red border... 
   -->
-    <input type="text" class="controls" id="originbox" placeholder="Starting Point"></input>
-    <input type="text" class="controls" id="destinationbox" placeholder="Destination"></input>
 
-    <div class="container">
+    <div id="mapControls">
+      <input type="text" class="controls text-center" id="originbox" placeholder="Starting Point" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Starting Point'">
+      <input type="text" class="controls text-center" id="destinationbox" placeholder="Destination" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Destination'">
+    </div>
+
+    <div class="container-fluid">
       <h1 class="dark-blue white-text">
       <img class="logo" id="headerIcon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Ic_directions_walk_48px.svg"/>
         Safewalk
@@ -30,9 +33,6 @@
             <div id="map" >
               <h1>Hello!</h1>
             </div>
-            <div id="mapOverlay">
-              <button class="btn">Test button</button>
-            </div>
           </div>
           <div id="addAlertModal" class="modal">
             <div class="modal-content">
@@ -40,20 +40,22 @@
                 <span id="closeModal" class="close">x</span>
                 <h3 class = "addAlertLabel">Add Alert</h3>
               </div>
-            <input type="text" id="locationText" hidden></input>
-            <div id="commentWrapper">
-              <div id = "commentLabel">Comment: </div>
-              <textarea id="commentText"></textarea>
+              <input type="text" id="locationText" hidden>
+              <div id="commentWrapper">
+                <label id = "commentLabel">Comment: </label>
+                <textarea id="commentText"></textarea>
+              </div>
+              <button id="submitAlert" class="btn center-block dark-blue">Submit</button>
             </div>
-            <button id="submitAlert" class="btn center-block dark-blue">Submit</button>
           </div>
-        </div>
+        </div><!-- mapCol -->
+      </div><!-- row -->
+      <div>
+        <h2>Alerts</h2>
+        <!-- <br><br> -->
       </div>
-      <h2> Alerts 
-      </h2>
-      <br></br>
       <div id="thecomments">
-            
+        
       </div>
     </div>
 
