@@ -93,11 +93,23 @@ function calcRoute() {
     var request = {
       origin: start,
       destination: end,
-      travelMode: 'WALKING'
+      travelMode: 'WALKING',
+      provideRouteAlternatives: true
     };
     directionsService.route(request, function(result, status) {
       if (status == 'OK') {
-        directionsDisplay.setDirections(result);
+        for(var i in  result.routes ) {
+          directionsDisplay.setDirections(result);
+          if(i != 0) {
+            var line = new google.maps.Polyline({
+              path: result.routes[i].overview_path,
+              strokeColor: "#999999",  // you might want different colors per suggestion
+              strokeOpacity: 0.7,
+              strokeWeight: 5
+            });
+            line.setMap(map);
+          }
+        }
       }
     });
   }
