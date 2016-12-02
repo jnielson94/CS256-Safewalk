@@ -2,6 +2,7 @@
 var drectionsDisplay;
 var directionsService;
 var map = '';
+var polylines = [];
 
 function initMap() {
   directionsDisplay = new google.maps.DirectionsRenderer();
@@ -83,6 +84,20 @@ function initMap() {
     document.getElementById('addAlertModal').style.display = 'block'
     document.getElementById('locationText').value = JSON.stringify(e.latLng.toJSON())
   })
+
+  google.maps.Polyline.prototype.getBounds = function(startBounds) {
+    if(startBounds) {
+      var bounds = startBounds;
+    }
+    else {
+      var bounds = new google.maps.LatLngBounds();
+    }
+
+    this.getPath().forEach(function(item, index) {
+      bounds.extend(new google.maps.LatLng(item.lat(), item.lng()));
+    });
+    return bounds;
+  };
 }
 
 function calcRoute() {
@@ -97,22 +112,60 @@ function calcRoute() {
       provideRouteAlternatives: true
     };
     directionsService.route(request, function(result, status) {
+      // clear polylines
+      for(var j in  polylines ) {
+        polylines[j].setMap(null);
+      }
+      polylines = [];
       if (status == 'OK') {
         for(var i in  result.routes ) {
-          directionsDisplay.setDirections(result);
-          if(i != 0) {
-            var line = new google.maps.Polyline({
-              path: result.routes[i].overview_path,
-              strokeColor: "#999999",  // you might want different colors per suggestion
-              strokeOpacity: 0.7,
-              strokeWeight: 5
+          var bounds = new google.maps.LatLngBounds();
+          // draw the lines in reverse orde, so the first one is on top (z-index)
+          for(var i=result.routes.length - 1; i>=0; i-- ) {
+          // let's make the first suggestion highlighted;
+            if(i==0) {
+              var color = '#0088ff';
+	    }
+            else {
+              var color = '#999999';
+            }
+            var line = drawPolyline(result.routes[i].overview_path, color);
+            polylines.push(line);
+            bounds = line.getBounds(bounds);
+            google.maps.event.addListener(line, 'click', function() {
+              // detect which route was clicked on
+              var index = polylines.indexOf(this);
+              highlightRoute(index);
             });
-            line.setMap(map);
           }
-        }
+          map.fitBounds(bounds);
+	}
       }
     });
   }
+}
+
+function highlightRoute(index) {
+  for(var j in  polylines ) {
+    if(j==index) {
+      var color = '#0088ff';
+    }
+    else {
+      var color = '#999999';
+    }
+    polylines[j].setOptions({strokeColor: color});
+  }
+}
+
+function drawPolyline(path, color) {
+  var line = new google.maps.Polyline({
+    path: path,
+    strokeColor: color,
+    strokeOpacity: 0.4,
+    strokeWeight: 6
+  });
+  line.setMap(map);
+  return line;
 }
 
 // Initialize Firebase
