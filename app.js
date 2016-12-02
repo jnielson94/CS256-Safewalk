@@ -3,7 +3,7 @@ var drectionsDisplay;
 var directionsService;
 var map = '';
 var polylines = [];
-
+var routeMarkers = [] 
 function initMap() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsService = new google.maps.DirectionsService();
@@ -40,7 +40,7 @@ function initMap() {
     } 
     else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);
+      map.setZoom(15);
     }
   }
 
@@ -105,6 +105,10 @@ function calcRoute() {
   var end = $("#destinationbox").val();
 
   if(start != '' && end != '') {
+    for(mark in routeMarkers) {
+      routeMarkers[mark].setMap(null);
+    }
+    routeMarkers = [];
     var request = {
       origin: start,
       destination: end,
@@ -140,6 +144,22 @@ function calcRoute() {
           }
           map.fitBounds(bounds);
 	}
+  var originMarker = new google.maps.Marker({ 
+    position: result.routes[0].legs[0].start_location,
+    map: map,
+    label: "A",
+    title: "Origin"
+  })
+  routeMarkers.push(originMarker);
+  var destinationMarker = new google.maps.Marker({
+    position: result.routes[0].legs[0].end_location,
+    map: map,
+    label: "B",
+    color: "Green",
+    title: "Origin"
+  })
+  routeMarkers.push(destinationMarker);
+  
       }
     });
   }
