@@ -311,7 +311,7 @@ alerts.on('child_added', function (data) { // when alert is added to DB
       console.log(theMarker);
     }
     $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
-      '\" > '+ formattedTime + ":  " +labelText+ ". "+ data.val().alertText +
+      '\" > '+ formattedTime + ":  <strong>" +labelText+ ".</strong> "+ data.val().alertText +
       '</p>')
   } else {
     alerts.child(data.key).remove();
