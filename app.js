@@ -2,7 +2,6 @@
 var drectionsDisplay;
 var directionsService;
 var map = '';
-
 function initMap() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   directionsService = new google.maps.DirectionsService();
@@ -39,7 +38,7 @@ function initMap() {
     } 
     else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);
+      map.setZoom(12);
     }
   }
 
@@ -141,11 +140,10 @@ submit.onclick = function () {
 var markers = [];
 var labelIndex = 0
 
-function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2501, lng: -111.649}
+function addMarker (myLatLng, map, comment, labelText, theTime) { // myLatLng: {lat: 40.2501, lng: -111.649}
   console.log('Adding a marker: ')
   console.log(myLatLng, comment)
   var latLng = JSON.parse(myLatLng)
-  console.log('Parsed! ', latLng)
   // var marker = new google.maps.Marker({
   //   position: latLng,
   //   icon: 'alert.png',
@@ -164,6 +162,7 @@ function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2
     '<div id="siteNotice">' + '</div>' +
     '<h1 id="firstHeading" class="firstHeading">Alert</h1>' +
     '<div id="bodyContent">' +
+    'Around: ' + theTime + ': ' +
     commentText +
     '</div></div>'
   var infowindow = new google.maps.InfoWindow({
@@ -174,7 +173,7 @@ function addMarker (myLatLng, map, comment, labelText) { // myLatLng: {lat: 40.2
     infowindow.open(map, marker)
     setTimeout(function() {
       infowindow.close();
-    }, 3000)
+    }, 5000)
   })
   markers.push(marker);
   return marker; 
@@ -184,9 +183,11 @@ var database = firebase.database()
 var alerts = database.ref('alerts/')
 
 function addAlert (Location, Alerts) { // params given by modal
+  var theTime = Date.now();
   alerts.push({
     location: Location,
-    alertText: Alerts
+    alertText: Alerts,
+    time: theTime
   })
 }
 
@@ -212,20 +213,29 @@ alerts.on('child_added', function (data) { // when alert is added to DB
   console.log('Child Added Messages: ')
   console.log(data.val().location) // checking that it saved to database correctly
   console.log(data.val().alertText)
-
+  console.log(data.val().time)
   // note: get the timestamp also
-  var labelText;
-  var theMarker 
-  if (map !== '') {
-    labelText = "" + labelIndex++;
-    theMarker = addMarker(data.val().location, map, data.val().alertText,labelText);
-    console.log(theMarker);
+  var currentTime = Date.now();
+  var timeDiff = (currentTime - data.val().time)
+  var numHoursPassed = timeDiff/1000/60/60  //Given in milliseconds originally
+  console.log(timeDiff);
+  console.log(numHoursPassed);
+  if(numHoursPassed < 24) {
+    var savedTime = new Date(data.val().time)
+    var formattedTime = savedTime.toLocaleString('en-US').replace(/,/, '')
+    var labelText;
+    var theMarker 
+    if (map !== '') {
+      labelText = "" + labelIndex++;
+      theMarker = addMarker(data.val().location, map, data.val().alertText,labelText, formattedTime);
+      console.log(theMarker);
+    }
+    $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
+      '\" > '+ formattedTime + ":  " +labelText+ ". "+ data.val().alertText +
+      '</p>')
+  } else {
+    alerts.child(data.key).remove();
   }
-
-  $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
-    '\" >'+labelText+ ". " + data.val().alertText +
-    '  <button class="button btn btn-danger" onclick="deleteAlert(\''+data.key+
-    '\',\'' + theMarker.label + '\')">X</button></p>')
 // (postElement,data.key, data.val().text)}
 //' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 });
