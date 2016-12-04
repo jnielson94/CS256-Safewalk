@@ -226,14 +226,14 @@ function addMarker (myLatLng, map, comment, labelText, theTime) { // myLatLng: {
   var latLng = JSON.parse(myLatLng)
   // var marker = new google.maps.Marker({
   //   position: latLng,
-  //   icon: 'alert.png',
+  //   icon: 'pin.png',
   //   label: labelText,
   //   labelOrigin: new google.maps.Point(10, -10),
   //   map: map
   // })
   var marker = new google.maps.Marker({
     position: latLng,
-    icon: {url: 'alert.png', labelOrigin: new google.maps.Point(10, 10)},
+    icon: {url: 'pin.png', labelOrigin: new google.maps.Point(10, 10)},
     label: {text: labelText, color: 'white', fontWeight: '400'},
     map: map
   })
