@@ -17,21 +17,22 @@
   red-border for the red border... 
   -->
 
-    <div id="mapControls">
-      <input type="text" class="controls text-center" id="originbox" placeholder="Starting Point" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Starting Point'">
-      <input type="text" class="controls text-center" id="destinationbox" placeholder="Destination" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Destination'">
-    </div>
+  <div id="mapControls">
+    <input type="text" class="controls text-center" id="originbox" placeholder="Starting Point" onfocus="this.placeholder = ''"
+      onblur="this.placeholder = 'Starting Point'">
+    <input type="text" class="controls text-center" id="destinationbox" placeholder="Destination" onfocus="this.placeholder = ''"
+      onblur="this.placeholder = 'Destination'">
+  </div>
 
-    <div class="container-fluid">
+  <div class="container-fluid">
     <div id="screen-wrapper">
       <h1 class="dark-blue white-text">
-      <img class="logo" id="headerIcon" src="./safewalkLogo.png"/>
-        Safewalk
+        <img class="logo" id="headerIcon" src="./safewalkLogo.png" /> Safewalk
       </h1>
       <div class="row">
         <div id="mapCol" class="col-md-12">
           <div id="mapWrapper">
-            <div id="map" >
+            <div id="map">
               <h1>Hello!</h1>
             </div>
           </div>
@@ -39,34 +40,36 @@
             <div class="modal-content">
               <div class="modal-header dark-blue">
                 <span id="closeModal" class="close">x</span>
-                <h3 class = "addAlertLabel">Add Alert</h3>
+                <h3 class="addAlertLabel">Add Alert</h3>
               </div>
               <input type="text" id="locationText" hidden>
               <div id="commentWrapper">
-                <label id = "commentLabel">Comment: </label>
+                <label id="commentLabel">Comment: </label>
                 <textarea id="commentText"></textarea>
               </div>
               <button id="submitAlert" class="btn center-block dark-blue">Submit</button>
             </div>
           </div>
-        </div><!-- mapCol -->
-      </div><!-- row -->
-      <div id="alerts-div" class="dark-blue white-text">
-        <h2>Alerts</h2>
-        <!-- <br><br> -->
+        </div>
+        <!-- mapCol -->
       </div>
-      <div id="thecomments">
-        
-      </div>
-    </div>
-    </div>
+      <!-- row -->
+      <!-- <div id="alerts-div" class="dark-blue white-text"> -->
+      <!-- <h2>Alerts</h2> -->
+      <!-- <br><br> -->
+      <!--</div> -->
+      <!-- <div id="thecomments"> -->
 
-    <!-- Includes for jQuery, Firebase, Google Maps, and our app are last to improve performance a little-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap&libraries=places" async
-      defer></script>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <!-- Includes for jQuery, Firebase, Google Maps, and our app are last to improve performance a little-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwMvGRolX5F2CQ2ZxbwAsywLRoNeStGc&callback=initMap&libraries=places"
+    async defer></script>
 </body>
 
 </html>

@@ -234,7 +234,7 @@ function addMarker (myLatLng, map, comment, labelText, theTime) { // myLatLng: {
   var marker = new google.maps.Marker({
     position: latLng,
     icon: {url: 'pin.png', labelOrigin: new google.maps.Point(10, 10)},
-    label: {text: labelText, color: 'white', fontWeight: '400'},
+    //label: {text: labelText, color: 'white', fontWeight: '400'},
     map: map
   })
   var commentText = comment || 'No Comment was given'; // Sets default text to the comment, or if no comment is passed in the empty string
@@ -310,12 +310,11 @@ alerts.on('child_added', function (data) { // when alert is added to DB
       theMarker = addMarker(data.val().location, map, data.val().alertText,labelText, formattedTime);
       console.log(theMarker);
     }
-    $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
-      '\" > '+ formattedTime + ":  <strong>" +labelText+ ".</strong> "+ data.val().alertText +
-      '</p>')
+    // $('#thecomments').append('<p class = "alerts" id =\"'+ data.key +
+    //   '\" > '+ formattedTime + ":  <strong>" +labelText+ ".</strong> "+ data.val().alertText +
+    //   '</p>')
   } else {
-    alerts.child(data.key).remove();
+    //Don't actually delete the data... but don't add it to the map either. So, do nothing. 
+    //alerts.child(data.key).remove();
   }
-// (postElement,data.key, data.val().text)}
-// ' Location: ' + data.val().location + -- for when we put in geolocation- if we ever get to that
 })
